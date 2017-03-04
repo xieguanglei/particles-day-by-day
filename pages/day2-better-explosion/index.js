@@ -27,16 +27,16 @@
 
     var powerFactor = 0.8 + Math.random() * 0.4;
 
-    points.push({
-      size: MIN_SIZE + Math.random() * (MAX_SIZE - MIN_SIZE),
-      color: randomColor(),
-      x: 0,
-      y: 0,
-      powerFactor: powerFactor,
-      initialPowerFactor: powerFactor,
-      dx: dx,
-      dy: dy
-    })
+points.push({
+  size: MIN_SIZE + Math.random() * (MAX_SIZE - MIN_SIZE),
+  color: randomColor(),
+  x: 0,
+  y: 0,
+  powerFactor: powerFactor,
+  initialPowerFactor: powerFactor,
+  dx: dx,
+  dy: dy
+})
   }
 
   var startTime = Date.now();

@@ -2,17 +2,14 @@
 
   var c = document.getElementById('the-canvas').getContext('2d');
 
-
   var COUNT = 300;
   var WIDTH = 500;
   var HEIGHT = 500;
   var MIN_SIZE = 5;
   var MAX_SIZE = 15;
 
-  var RADIUS = WIDTH * 1.2;
-
-  var rotateSpeed = Math.PI / 500;
-  var radiusFactorSpeed = 1 / 2000;
+  var RADIUS = WIDTH * 0.6;
+  var SPEED = RADIUS * Math.PI / 4000;
 
   var points = [];
   for(var i = 0; i < COUNT; i++) {
@@ -20,35 +17,50 @@
       size: MIN_SIZE + Math.random() * (MAX_SIZE - MIN_SIZE),
       color: randomColor(),
       theta: Math.random() * Math.PI * 2,
-      radiusFactor: 0.2 + Math.random()
+      radius: RADIUS * (Math.random() * 0.5 + 0.1),
+      speed: SPEED * (Math.random() * 0.6 + 0.2)
     })
   }
 
-
   var startTime = Date.now();
+  var last = startTime;
 
   animate();
 
   function animate() {
     var now = Date.now();
     var lasted = now - startTime;
+    var step = now - last;
 
     c.clearRect(0, 0, WIDTH, HEIGHT);
 
     points.forEach(function(p) {
-      var theta = p.theta + lasted * rotateSpeed;
-      var rf = Math.max(p.radiusFactor - lasted * radiusFactorSpeed, 0);
-      var radius = RADIUS * rf;
 
-      const x = Math.cos(theta) * radius;
-      const y = Math.sin(theta) * radius;
+      var theta = p.theta;
+      var radius = p.radius;
+      var speed = p.speed;
 
-      draw(x, y, p.size, p.color,
-        Math.max(0, Math.min(5 * rf, 1))
-      );
+      var dTheta = speed * step / radius;
+      var dRadius = (8000 / (radius * radius) - speed * speed) * step / 10;
+      var dSpeed = Math.sqrt(dRadius) / 500;
+
+      p.theta += dTheta;
+      p.radius -= dRadius;
+      p.speed += dSpeed;
+
+      if (p.radius >= 0) {
+        var x = Math.cos(p.theta) * p.radius;
+        var y = Math.sin(p.theta) * p.radius;
+        var opacity = Math.max(0, Math.min(1, p.radius * 5 / WIDTH));
+        draw(x, y, p.size, p.color, opacity);
+      }
+
+
     });
-    requestAnimationFrame(animate);
 
+    last = now;
+
+    requestAnimationFrame(animate);
   }
 
 
