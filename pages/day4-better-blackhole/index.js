@@ -29,7 +29,6 @@
 
   function animate() {
     var now = Date.now();
-    var lasted = now - startTime;
     var step = now - last;
 
     c.clearRect(0, 0, WIDTH, HEIGHT);

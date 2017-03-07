@@ -24,7 +24,6 @@
     })
   }
 
-
   var startTime = Date.now();
 
   animate();
