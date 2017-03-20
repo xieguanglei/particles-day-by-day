@@ -3,7 +3,7 @@
   var c = document.getElementById('the-canvas').getContext('2d');
   var WIDTH = 500;
   var HEIGHT = 500;
-  var COUNT = 50;
+  var COUNT = 100;
   var PADDING = 2;
   var SPEED = 2;
 
